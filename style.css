@@ -296,6 +296,10 @@ footer {
   }
 /* Responsive design */
 @media (max-width: 768px) {
+    nav{
+        padding: 10px 5%;
+        
+       }
     .hero h2 {
         font-size: 2rem;
     }
