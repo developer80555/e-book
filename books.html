@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="books.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="nav-container">
+          <a href="index.html"> <img src="/assets/logo.png" alt="" /></a>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="books.html">Books</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!--------------- Main Section   -------------->
+      <main>
+        <div class="books-header">
+          <h2>Our E-Book Collection</h2>
+          <div class="search-filters">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search by title or author..."
+              class="search-input"
+            />
+            <select id="genreFilter" class="genre-select">
+              <option value="">All Genres</option>
+              <option value="Adventure">Adventure</option>
+              <option value="Mystery">Mystery</option>
+              <option value="Non-fiction">Non-fiction</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="book-list" id="bookList">
+          <div class="book-item" data-genre="Adventure">
+            <div class="book-cover book1"></div>
+            <div class="book-details">
+              <h3>The Great Adventure</h3>
+              <p class="author">By John Smith</p>
+              <p class="description">
+                An exciting journey through unknown lands, filled with mystery
+                and wonder.
+              </p>
+              <p class="genre">Genre: Adventure</p>
+              <p class="pages">Pages: 324</p>
+            </div>
+          </div>
+
+          <div class="book-item" data-genre="Mystery">
+            <div class="book-cover book2"></div>
+            <div class="book-details">
+              <h3>Mystery Manor</h3>
+              <p class="author">By Jane Doe</p>
+              <p class="description">
+                A thrilling mystery set in an old Victorian mansion.
+              </p>
+              <p class="genre">Genre: Mystery</p>
+              <p class="pages">Pages: 256</p>
+            </div>
+          </div>
+
+          <div class="book-item" data-genre="Non-fiction">
+            <div class="book-cover book3"></div>
+            <div class="book-details">
+              <h3>Science Today</h3>
+              <p class="author">By David Wilson</p>
+              <p class="description">
+                Modern scientific discoveries explained in simple terms.
+              </p>
+              <p class="genre">Genre: Non-fiction</p>
+              <p class="pages">Pages: 412</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="noResults" class="no-results" style="display: none">
+          <p>No books found matching your search criteria.</p>
+        </div>
+      </main>
+
+      <!--------------- Footer Section  -------------->
+      <footer>
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>About Us</h4>
+            <p>Your gateway to knowledge and adventure through books.</p>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="books.html">Books</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contact</h4>
+            <p><i class="fas fa-envelope"></i> contact@library.com</p>
+            <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 DNIIT Book Library. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const genreFilter = document.getElementById("genreFilter");
+        const bookList = document.getElementById("bookList");
+        const noResults = document.getElementById("noResults");
+        const books = document.querySelectorAll(".book-item");
+
+        function filterBooks() {
+          const searchTerm = searchInput.value.toLowerCase();
+          const selectedGenre = genreFilter.value;
+          let hasVisibleBooks = false;
+
+          books.forEach((book) => {
+            const title = book.querySelector("h3").textContent.toLowerCase();
+            const author = book
+              .querySelector(".author")
+              .textContent.toLowerCase();
+            const genre = book.dataset.genre;
+
+            const matchesSearch =
+              title.includes(searchTerm) || author.includes(searchTerm);
+            const matchesGenre =
+              selectedGenre === "" || genre === selectedGenre;
+
+            if (matchesSearch && matchesGenre) {
+              book.style.display = "flex";
+              hasVisibleBooks = true;
+            } else {
+              book.style.display = "none";
+            }
+          });
+
+          noResults.style.display = hasVisibleBooks ? "none" : "block";
+        }
+
+        searchInput.addEventListener("input", filterBooks);
+        genreFilter.addEventListener("change", filterBooks);
+      });
+    </script>
+  </body>
+</html>
